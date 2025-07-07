@@ -1,16 +1,25 @@
 import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFilter, resetFilters, setSearchTerm } from "../redux/filterSlice";
 import SearchBar from "./SearchBar";
+import { useState } from "react";
 
-const FilterPanel = ({ filters, setFilters, searchTerm, setSearchTerm }) => {
+const FilterPanel = () => {
+  const dispatch = useDispatch();
+  const filters = useSelector(state => state.filter);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [tempSearch, setTempSearch] = useState(searchTerm);
+  const [tempSearch, setTempSearch] = useState(filters.searchTerm);
 
   const handleChange = (option) => {
-    const newFilters = { ...filters, [option]: !filters[option] };
-    setFilters(newFilters);
+    dispatch(toggleFilter(option));
 
-    const activeFilters = Object.keys(newFilters).filter(k => newFilters[k]);
+    const updatedFilters = {
+      ...filters,
+      [option]: !filters[option],
+    };
+
+    const activeFilters = Object.keys(updatedFilters).filter(k => updatedFilters[k] && (k === 'Paid' || k === 'Free' || k === 'ViewOnly'));
+
     if (activeFilters.length) {
       searchParams.set("filter", activeFilters.join(","));
     } else {
@@ -20,25 +29,25 @@ const FilterPanel = ({ filters, setFilters, searchTerm, setSearchTerm }) => {
   };
 
   const handleReset = () => {
-    setFilters({ Paid: false, Free: false, ViewOnly: false });
-    setSearchTerm("");
+    dispatch(resetFilters());
     setTempSearch("");
     searchParams.delete("filter");
     setSearchParams(searchParams);
   };
 
   const handleSearch = () => {
-    setSearchTerm(tempSearch);
+    dispatch(setSearchTerm(tempSearch));
   };
 
   return (
-    <div className="filter-panel mb-3">
+    <div className="filter-panel mb-3 filter-bg">
       <SearchBar
         tempSearch={tempSearch}
         setTempSearch={setTempSearch}
         handleSearch={handleSearch}
       />
-
+      <div className="filter-options d-flex flex-row align-items-center">
+        <span className="filter-title">Pricing Option</span>
       <label className="me-2">
         <input type="checkbox" checked={filters.Paid} onChange={() => handleChange("Paid")} /> Paid
       </label>
@@ -48,7 +57,8 @@ const FilterPanel = ({ filters, setFilters, searchTerm, setSearchTerm }) => {
       <label className="me-2">
         <input type="checkbox" checked={filters.ViewOnly} onChange={() => handleChange("ViewOnly")} /> View Only
       </label>
-      <button className="btn btn-secondary btn-sm ms-3" onClick={handleReset}>Reset</button>
+      <div className="rest-btn" onClick={handleReset}>REST</div>
+      </div>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import ContentCard from "./ContentCard";
 
 const ContentList = ({ data }) => {
   const [visibleCount, setVisibleCount] = useState(12);
-
+console.log("Data for ContentList:", data);
   const handleScroll = () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 50) {
       setVisibleCount(prev => prev + 8);

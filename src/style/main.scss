@@ -1,5 +1,153 @@
 @import 'bootstrap/scss/bootstrap';
-@import 'bootstrap/scss/_variables';
-@import 'bootstrap/scss/_mixins';
-@import 'bootstrap/scss/_grid';
-@import 'bootstrap/scss/_functions';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+
+$text-color: #ffffff; // Custom text color
+$background-color: #000000; // Custom background color
+$filter-panel-bg: #1A1A1F; // Custom filter panel background color
+// Custom styles
+body {
+  background-color: $background-color;
+  color: $text-color;
+  font-family: 'Poppins', sans-serif;
+}
+@media screen and (min-width: 1500px) {
+  .container {
+    max-width: 1450px; 
+  }
+    
+}
+@media screen and (min-width: 1300px) {
+  .container {
+    max-width: 1280px;
+  }
+    
+}
+header{
+    box-shadow: 0 -1px 0 0 #1A1A1F inset;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: $background-color;
+    z-index: 1;
+}
+.serach-bar{
+  position: relative;
+ // color: #96969f;
+  input{
+    background: $filter-panel-bg;
+    border: 1px solid #96969f;
+   // box-shadow: 0 -1px 0 0 #1A1A1F inset;
+   border-radius: 0px;
+   padding: 10px 0 10px 10px;
+   width: 100%;
+   color: #96969f !important;
+   font-weight: 600;
+    &:focus {
+      color: inherit;
+      background-color:transparent;
+      border-color: #66F0FF;
+      outline: 0;
+      box-shadow: none;
+      z-index: unset !important;
+    }
+    &::placeholder {
+      color: #96969f;
+      opacity: 1; // Ensures the placeholder is visible
+    }
+  }
+  .searc-btn{
+    position: absolute;
+    right: 9px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 20px;
+  }
+}
+.filter-options {
+  color: #96969f;
+  .filter-title{
+    margin-right: 10px;
+    font-size: 12px;
+  }
+  label{
+    input[type = "checkbox"] {
+      accent-color: #66F0FF;
+    }
+  }
+  .rest-btn{
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #ffffff;
+    margin-left: auto;
+  }
+}
+.filter-bg{
+  background-color: $filter-panel-bg;
+  padding:  10px 0;
+  margin-top: 10px;
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: $filter-panel-bg;
+    .card-img{
+    width: 100%;
+    height: 220px; 
+    object-fit: contain; 
+    background-color: #f8f8f8;
+    cursor: pointer;
+    transition: ease-in-out 0.3s;
+    &:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease-in-out;
+    }
+  }
+    .card-body{
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .card-title{
+            font-size: 14px;
+            font-weight: bold;
+            color: #96969f;
+        }
+        .card-text{
+            font-size: 13px;
+            color: #96969f;
+        }
+        .card-price{
+            font-size: 15px;
+            font-weight: bold;
+            color: $text-color;
+            margin-top: 10px;
+        }
+    }
+}
+
+.placeholder {
+  background-color: #dee2e6;
+  border-radius: 0.25rem;
+}
+.placeholder-glow .placeholder {
+  animation: placeholder-glow 1.5s ease-in-out infinite;
+}
+
+@keyframes placeholder-glow {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+
